@@ -29,7 +29,7 @@ var concert = function (artist) {
 var movie = function (movie) {
 
     var queryURL = "http://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=trilogy";
-    console.log(queryURL)
+    
     request(queryURL, function(error, response, body){
         var obj = JSON.parse(body);
 
