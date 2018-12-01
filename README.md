@@ -22,7 +22,7 @@ BANDSINTOWN=#######
 ```
 
 You can also edit the random.txt file. Make sure to format it like so:
-<command>**,**<search term>
+_command_**,**_search term_
 
 ## Using LIRI
 
@@ -43,3 +43,8 @@ Will parse the random.txt file for a command and search term.
 
 # Examples
 
+![movie](./imgs/movie.png)
+
+![concert](./imgs/concert.png)
+
+![song](./imgs/song.png)
