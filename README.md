@@ -1,14 +1,14 @@
 # LIRI
-Language Interpretation and Recognition Interface - Week 10 Homework
+## Language Interpretation and Recognition Interface - Week 10 Homework
 
-Search using very specific APIs to log info to the console and to a log.txt file.
+### Search using very specific APIs to log info to the console and to a log.txt file.
 
 ## Features
 
 Search for concerts by artist.  
 Search for songs on spotify.  
 Search for info on movies.  
-Parse a text file for commands.s  
+Parse a text file for commands.  
 
 ## Setup
 
