@@ -28,6 +28,20 @@ var concert = function (artist) {
 
 var movie = function (movie) {
 
+    var queryURL = "http://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=trilogy";
+    console.log(queryURL)
+    request(queryURL, function(error, response, body){
+        var obj = JSON.parse(body);
+
+        console.log(`Title: ${obj.Title}`);
+        console.log(`Year: ${obj.Year}`);
+        console.log(`IMDB Rating: ${obj.imdbRating}`);
+        console.log(`Rotten Rating: ${obj.Ratings[1].Value}`);
+        console.log(`Country: ${obj.Country}`);
+        console.log(`Language: ${obj.Language}`);
+        console.log(`Plot:\n ${obj.Plot}`);
+        console.log(`Actors: ${obj.Actors} `)
+    })
 }
 
 var displayTrack = function (data) {
@@ -39,11 +53,7 @@ var displayTrack = function (data) {
 
 }
 
-var parseTxt = function (txt) {
-
-}
 var liri = function (cmd, query) {
-
     switch (cmd) {
         case "concert-this":
             if(query){
@@ -71,13 +81,16 @@ var liri = function (cmd, query) {
             }
             break;
         case "movie-this":
-                movie(query);
+                if(query){
+                    movie(query);
+                }else{
+                    movie("mr%20nobody");
+                }
             
             break;
 
         default:
-            console.log("ERROR! Possible commands:");
-            console.log("concert-this \nspotify-this-song\nmovie-this\ndo-what-it-says");
+            console.log("ERROR! Possible commands:\nconcert-this \nspotify-this-song\nmovie-this\ndo-what-it-says");
             break;
     }
 }
@@ -98,13 +111,14 @@ if (process.argv.length > 2) {
                 query.push(process.argv[i]);
             }
             liri(process.argv[2].toLowerCase(), query.join("%20").toLowerCase());
+        }else{
+            liri(process.argv[2].toLowerCase(), "");
         }
     }
 
 
 } else {
-    console.log("Possible commands:");
-    console.log("concert-this \nspotify-this-song\nmovie-this\ndo-what-it-says");
+    console.log("Possible commands:\nconcert-this \nspotify-this-song\nmovie-this\ndo-what-it-says");
 
 }
 
