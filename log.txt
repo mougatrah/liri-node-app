@@ -1,0 +1,30 @@
+Concert:
+Lineup: BTS
+Venue: ナゴヤドーム
+Location: 名古屋, 愛知県
+Date: January 13 2019
+
+Concert:
+Lineup: Metallica
+Venue: Spokane Arena
+Location: Spokane, WA
+Date: December 02 2018
+
+Concert:
+Lineup: Judas Priest
+Venue: Bluesquare Hall
+Location: Seoul, South Korea
+Date: December 01 2018
+
+Song:
+Artist: Harry Styles
+Title: Sign of the Times
+Link: https://open.spotify.com/track/5Ohxk2dO5COHF1krpoPigN
+Album: Harry Styles
+
+Concert:
+Lineup: Judas Priest
+Venue: Bluesquare Hall
+Location: Seoul, South Korea
+Date: December 01 2018
+

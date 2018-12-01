@@ -9,6 +9,7 @@ moment().format();
 var spotify = new Spotify(keys.spotify);
 
 var concert = function (artist) {
+    console.log("Searching for concert...")
     var queryURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=" + keys.bandsintown.id + "&date=upcoming";
     request(queryURL, function (error, response, body) {
 
@@ -16,9 +17,12 @@ var concert = function (artist) {
 
         if (obj[0]) {
             var ven = obj[0].venue;
-            console.log(`VENUE NAME: \n${ven.name}`);
-            console.log(`LOCATION: \n${ven.city}, ${ven.region.length != "" ? ven.region : ven.country}`);
-            console.log(`DATE: \n${moment(obj[0].datetime).format("MMMM DD YYYY")}`);
+            logData(`Concert:` + 
+            `\nLineup: ${obj[0].lineup}` +
+            `\nVenue: ${ven.name}` +
+            `\nLocation: ${ven.city}, ${ven.region.length != "" ? ven.region : ven.country}` +
+            `\nDate: ${moment(obj[0].datetime).format("MMMM DD YYYY")}`);
+          
         } else {
             console.log("No concert found. :(")
         }
@@ -27,66 +31,85 @@ var concert = function (artist) {
 
 
 var movie = function (movie) {
-
+    console.log("Searching for a movie...")
     var queryURL = "http://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=trilogy";
-    
-    request(queryURL, function(error, response, body){
+
+    request(queryURL, function (error, response, body) {
         var obj = JSON.parse(body);
 
-        console.log(`Title: ${obj.Title}`);
-        console.log(`Year: ${obj.Year}`);
-        console.log(`IMDB Rating: ${obj.imdbRating}`);
-        console.log(`Rotten Rating: ${obj.Ratings[1].Value}`);
-        console.log(`Country: ${obj.Country}`);
-        console.log(`Language: ${obj.Language}`);
-        console.log(`Plot:\n ${obj.Plot}`);
-        console.log(`Actors: ${obj.Actors} `)
-    })
+        logData(`Movie:` +
+            `\nTitle: ${obj.Title}` +
+        `\nYear: ${obj.Year}` +
+        `\nIMDB Rating: ${obj.imdbRating}` +
+        `\nRotten Rating: ${obj.Ratings[1].Value}` +
+        `\nCountry: ${obj.Country}` +
+        `\nLanguage: ${obj.Language}` +
+        `\nPlot:\n ${obj.Plot}` +
+        `\nActors: ${obj.Actors}`);
+        
+})
+}
+
+var searchSpotify = function(query){
+    if (query) {
+        spotify.search({ type: 'track', query: query, limit: 1 }, function (err, data) {
+            if (err) {
+                return console.log('Error occurred: ' + err);
+            }
+
+            displayTrack(data);
+        });
+    } else {
+        spotify.search({ type: 'track', query: "the sign", limit: 1 }, function (err, data) {
+            if (err) {
+                return console.log('Error occurred: ' + err);
+            }
+            displayTrack(data);
+        });
+    }
 }
 
 var displayTrack = function (data) {
     var track = data.tracks.items[0];
-    console.log(`Artist:\n${track.artists[0].name}`);
-    console.log(`Title:\n${track.name}`);
-    console.log(`Link:\n${track.external_urls.spotify}`);
-    console.log(`Album:\n${track.album.name}`);
+    logData(`Song:` +
+        `\nArtist: ${track.artists[0].name}` +
+    `\nTitle: ${track.name}` +
+    `\nLink: ${track.external_urls.spotify}` +
+    `\nAlbum: ${track.album.name}`)
+   
+  
 
+}
+
+var logData = function(data){
+    console.log(data);
+    fs.appendFile("log.txt", data + "\n\n", function (err) {
+        if (err) {
+            console.log(err);
+        }
+    })
 }
 
 var liri = function (cmd, query) {
     switch (cmd) {
         case "concert-this":
-            if(query){
+            if (query) {
                 concert(query);
             } else {
                 console.log("Please enter an artist.");
             }
             break;
         case "spotify-this-song":
-          if(query){
-                spotify.search({ type: 'track', query: query, limit: 1 }, function (err, data) {
-                    if (err) {
-                        return console.log('Error occurred: ' + err);
-                    }
-
-                    displayTrack(data);
-                });
-            } else {
-                spotify.search({ type: 'track', query: "the sign", limit: 1 }, function (err, data) {
-                    if (err) {
-                        return console.log('Error occurred: ' + err);
-                    }
-                    displayTrack(data);
-                });
-            }
+            console.log("Searching for a song.")
+            searchSpotify(query);
             break;
         case "movie-this":
-                if(query){
-                    movie(query);
-                }else{
-                    movie("mr%20nobody");
-                }
-            
+            if (query) {
+                movie(query);
+            } else {
+                movie("mr%20nobody");
+            }
+
             break;
 
         default:
@@ -111,7 +134,7 @@ if (process.argv.length > 2) {
                 query.push(process.argv[i]);
             }
             liri(process.argv[2].toLowerCase(), query.join("%20").toLowerCase());
-        }else{
+        } else {
             liri(process.argv[2].toLowerCase(), "");
         }
     }
