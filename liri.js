@@ -13,6 +13,10 @@ var concert = function (artist) {
     var queryURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=" + keys.bandsintown.id + "&date=upcoming";
     request(queryURL, function (error, response, body) {
 
+        if(error){
+            console.log(error);
+        }else{
+            
         var obj = JSON.parse(body);
 
         if (obj[0]) {
@@ -25,6 +29,7 @@ var concert = function (artist) {
           
         } else {
             console.log("No concert found. :(")
+        }
         }
     });
 }

@@ -51,6 +51,10 @@ Searches OMDB for info on the movie provided. If no movie title is provided, LIR
 - do-what-it-says  
 Will parse the random.txt file for a command and search term.
 
+## Log
+
+LIRI will save your search results in a log.txt file.  
+![log](./imgs/log.png)
 
 
 
