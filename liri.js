@@ -2,7 +2,7 @@ require("dotenv").config();
 var Spotify = require("node-spotify-api");
 var request = require('request');
 var keys = require("./keys.js");
-var moment = require("moment");
+var moment = require("moment"); 
 var fs = require("fs");
 moment().format();
 
@@ -128,7 +128,7 @@ if (process.argv.length > 2) {
         fs.readFile("./random.txt", function (err, data) {
 
             var terms = data.toString().split(",");
-            console.log(terms[0])
+           
             liri(terms[0], terms[1]);
         });
 
