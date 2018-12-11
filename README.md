@@ -36,7 +36,7 @@ Possible commands:
 - concert-this <artist>  
  Searches BandsInTown for the next concert available for the artist provided.
 
- ![concert](./imgs/concert.png)
+  ![concert](./imgs/concert.png)
 
 - spotify-this-song <song title>  
 Searches Spotify for info on the song title provided. If no song title is provided, LIRI will search Spotify for 'The Sign'.
